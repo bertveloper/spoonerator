@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/spoonerator/static/css/main.a9957249.css",
-    "main.js": "/spoonerator/static/js/main.4a527764.js",
+    "main.js": "/spoonerator/static/js/main.ba803197.js",
     "static/js/787.614b0e7c.chunk.js": "/spoonerator/static/js/787.614b0e7c.chunk.js",
     "index.html": "/spoonerator/index.html",
     "main.a9957249.css.map": "/spoonerator/static/css/main.a9957249.css.map",
-    "main.4a527764.js.map": "/spoonerator/static/js/main.4a527764.js.map",
+    "main.ba803197.js.map": "/spoonerator/static/js/main.ba803197.js.map",
     "787.614b0e7c.chunk.js.map": "/spoonerator/static/js/787.614b0e7c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a9957249.css",
-    "static/js/main.4a527764.js"
+    "static/js/main.ba803197.js"
   ]
 }
