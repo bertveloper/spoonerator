@@ -12,6 +12,7 @@ class Input extends React.Component {
             input: '', 
             singleSpoon: 'Wello Horld',
             doubleSpoon: 'Hollo Werld',
+            tripleSpoon: 'Worldo Hell',
             simpleReverse: 'olleH dlroW',
             fullReverse: 'dlroW olleH',
             hasError: false,
@@ -38,15 +39,26 @@ class Input extends React.Component {
     updateSpoonResult(){
         var singleSpoonResult = this.singleSpoonInput(this.state.input);
         var doubleSpoonResult = this.doubleSpoonInput();
+        var tripleSpoonResult = this.tripleSpoonInput();
         var simpleReverseResult = this.simpleReverseInput();
         var fullReverseResult = this.fullReverseInput();
 
         this.setState({
             singleSpoon: singleSpoonResult,
             doubleSpoon: doubleSpoonResult,
+            tripleSpoon: tripleSpoonResult,
             simpleReverse: simpleReverseResult,
             fullReverse: fullReverseResult
         });
+    }
+
+    singleSpoonInput(input) {
+        var words = input.trim().split(/\s+/);
+        if (!this.validateInput(words)){
+            return words.join(" ");
+        }
+
+        return this.spoonInput(words, 1);
     }
 
     doubleSpoonInput() {
@@ -56,6 +68,15 @@ class Input extends React.Component {
         }
 
         return this.spoonInput(words, 2);
+    }
+
+    tripleSpoonInput() {
+        var words = this.state.input.trim().split(/\s+/);
+        if (!this.validateInput(words)){
+            return this.state.input;
+        }
+
+        return this.spoonInput(words, 3);
     }
 
     spoonInput(words, spoons) {
@@ -75,6 +96,10 @@ class Input extends React.Component {
         var splittedWord1 = this.splitWord(word1);
         var splittedWord2 = this.splitWord(word2);
 
+        if (splittedWord1.length < spoons || splittedWord2.length < spoons){
+            return "n/a";
+        }
+
         var word1DoubleStart = splittedWord1.splice(0, spoons).join("");
         var word2DoubleStart = splittedWord2.splice(0, spoons).join("");
         var word1End = splittedWord1.join("");
@@ -83,65 +108,13 @@ class Input extends React.Component {
         return `${word2DoubleStart}${word1End} ${word1DoubleStart}${word2End}`;
     }
 
-    singleSpoonInput(input) {
-        var words = input.trim().split(/\s+/);
-        if (!this.validateInput(words)){
-            return words.join(" ");
-        }
-
-        return this.spoonInput(words, 1);
-
-        var word1 = words[0];
-        var word2 = words[1];
-
-        if ((this.startsWithVowel(word1) && !this.startsWithVowel(word2)) ||
-            (!this.startsWithVowel(word1) && this.startsWithVowel(word2)))
-        {
-            this.setState({
-                hasError: true,
-                errorMessage: "Both starting with either consonant or vowel works best"
-            });
-            return this.state.input;
-        }
-
-        var new2Start = "";
-        var word1VowelIndex = 0;
-        for (let i = 0; !this.isVowel(word1[i]); i++) {
-            word1VowelIndex++;       
-            new2Start += word1[i];
-        }
-        var new1End = word1.substring(word1VowelIndex);
-
-        var new1Start = "";
-        var word2VowelIndex = 0;
-        for (let i = 0; !this.isVowel(word2[i]); i++) {
-            word2VowelIndex++;       
-            new1Start += word2[i];
-        }
-        var new2End = word2.substring(word2VowelIndex);
-
-        var newFirstWord = new1Start + new1End;
-        var newSecondWord = new2Start + new2End;
-
-        var simpleSpoon = newFirstWord + " " + newSecondWord;
-
-        return simpleSpoon;
-    }
 
     validateInput(words){
-        if (words.length < 2)
+        if (words.length != 2)
         {
             this.setState({
                 hasError: true,
-                errorMessage: "Please fill in at least 2 words"
-            });
-            return false;
-        }
-
-        if (words.length > 2) {
-            this.setState({
-                hasError: true,
-                errorMessage: "More than 2 words not supported atm..."
+                errorMessage: "Spoons go by 2..."
             });
             return false;
         }
@@ -264,7 +237,7 @@ class Input extends React.Component {
                     <Form.Group className="mb-3" controlId="userInput" autoComplete="new-password">
                         <Form.Label className="txt-light">Input</Form.Label>
                         <Form.Control type="text" 
-                                      placeholder="Hello world"
+                                      placeholder="Hello World"
                                       autoComplete="off" 
                                       value={this.state.input} 
                                       onChange={this.handleChange} />
@@ -292,6 +265,10 @@ class Input extends React.Component {
                         <tr>
                             <td>Double Spoon</td>
                             <td>{this.state.doubleSpoon}</td>
+                        </tr>
+                        <tr>
+                            <td>Triple Spoon</td>
+                            <td>{this.state.tripleSpoon}</td>
                         </tr>
                         <tr>
                             <td>Simple Reverse</td>
