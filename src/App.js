@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Use this spoonerator to spoon your own input!
+          Spoonerator to spoonerism
         </p>
         
         <Input />
